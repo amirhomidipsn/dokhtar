@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>برای محیای من ♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --pink:#f3a6c4; --rose:#d95f91; --ink:#684354; --soft:#fff5f9; }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; min-height:100vh; display:grid; place-items:center; overflow:hidden;
+      background: radial-gradient(circle at 15% 15%, #ffe5ef 0, transparent 28%),
+                  radial-gradient(circle at 85% 80%, #ffeaf2 0, transparent 30%), #fffdfd;
+      color:var(--ink); font-family:'Vazirmatn', Tahoma, sans-serif;
+    }
+    .glow { position:fixed; width:280px; height:280px; border-radius:50%; background:#ffd9e8; filter:blur(75px); opacity:.55; pointer-events:none; }
+    .glow.one { top:-100px; right:-80px; } .glow.two { bottom:-130px; left:-80px; }
+    .card {
+      width:min(90vw, 570px); padding:clamp(30px, 7vw, 58px) clamp(24px, 7vw, 56px);
+      text-align:center; position:relative; z-index:1; border:1px solid #f8dce7;
+      border-radius:30px; background:rgba(255,255,255,.82); box-shadow:0 24px 80px #e8a9c31c;
+      animation: rise 1s ease both;
+    }
+    .tiny { color:#d986a8; letter-spacing:5px; font-size:12px; margin-bottom:24px; }
+    .flower { font-size:38px; line-height:1; margin-bottom:18px; filter:drop-shadow(0 5px 9px #f4b6cf66); }
+    h1 { font-size:clamp(27px, 6vw, 39px); font-weight:600; margin:0 0 18px; color:#bd527e; }
+    .intro { font-size:16px; font-weight:300; line-height:2.1; margin:0 auto; max-width:390px; color:#866575; }
+    .divider { width:55px; height:1px; background:#efbfd2; margin:27px auto; }
+    .reveal {
+      min-height:94px; display:flex; align-items:center; justify-content:center;
+      font-size:clamp(17px, 4vw, 21px); line-height:2.15; font-weight:500; color:#b44876;
+      opacity:0; transform:translateY(8px); transition:opacity .8s ease, transform .8s ease;
+    }
+    .reveal.show { opacity:1; transform:translateY(0); }
+    button { margin-top:22px; border:0; border-radius:999px; padding:13px 25px; background:#f7d3e1; color:#9c416b; font:500 14px 'Vazirmatn',sans-serif; cursor:pointer; transition:transform .2s, background .2s; box-shadow:0 7px 20px #e9abc51f; }
+    button:hover { background:#f4c2d6; transform:translateY(-2px); }
+    .signature { margin-top:28px; font-size:13px; color:#c38aa3; }
+    .heart { position:fixed; bottom:-30px; color:#f0a3c1; opacity:0; pointer-events:none; animation: floatUp 5s linear forwards; }
+    @keyframes rise { from { opacity:0; transform:translateY(15px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes floatUp { 0% { transform:translateY(0) rotate(0deg); opacity:0; } 12% {opacity:.65;} 100% {transform:translateY(-110vh) rotate(25deg); opacity:0;} }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <div class="glow one"></div><div class="glow two"></div>
+  <main class="card">
+    <div class="tiny">یک چیز کوچیک برای تو</div>
+    <div class="flower">🌷</div>
+    <h1>روز دختر مبارک محیای من</h1>
+    <p class="intro">بین این‌همه آدم توی دنیا<br>چه خوش‌شانسم که قلبم تو رو پیدا کرد.</p>
+    <div class="divider"></div>
+    <div class="reveal" id="message" aria-live="polite">تو فقط رزِ قشنگِ زندگی من نیستی<br>دلیلی هستی که دنیا برام قشنگ‌تر شده. ♡</div>
+    <button id="openBtn" type="button">یه چیز دیگه هم هست… ♡</button>
+    <div class="signature">با تمام قلبم برای تو  امیر</div>
+  </main>
+  <script>
+    const message = document.getElementById('message');
+    const button = document.getElementById('openBtn');
+    let opened = false;
+    button.addEventListener('click', () => {
+      if (!opened) {
+        message.classList.add('show');
+        button.textContent = 'دوستت دارم رزِ من ♡';
+        opened = true;
+        for (let i = 0; i < 15; i++) setTimeout(makeHeart, i * 110);
+      } else {
+        makeHeart();
+      }
+    });
+    function makeHeart() {
+      const heart = document.createElement('span');
+      heart.className = 'heart'; heart.textContent = Math.random() > .5 ? '♡' : '♥';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (14 + Math.random() * 18) + 'px';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7500);
+    }
+    // Gently reveal the main message after a moment, even if she doesn't tap.
+    setTimeout(() => message.classList.add('show'), 1800);
+  </script>
+</body>
+</html>
